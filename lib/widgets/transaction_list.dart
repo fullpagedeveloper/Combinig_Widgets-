@@ -7,49 +7,95 @@ class TransactionList extends StatelessWidget {
 
   TransactionList(this.transaction);
 
+  ///[ListView.builder(itemBuilder: null)] hanya memuat apa yang terlihat
+  ///ListView menampilkan semuany
+
+  ///[ListView]
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Container(
+  //     height: 300,
+  //     child: ListView(
+  //         children: transaction.map((txt) {
+  //           return Card(
+  //             child: Row(
+  //               children: [
+  //                 Container(
+  //                   padding: EdgeInsets.all(
+  //                     10,
+  //                   ),
+  //                   margin: EdgeInsets.symmetric(
+  //                     vertical: 10,
+  //                     horizontal: 15,
+  //                   ),
+  //                   decoration: BoxDecoration(
+  //                     border: Border.all(
+  //                       color: Colors.black,
+  //                       width: 2,
+  //                     ),
+  //                   ),
+  //                   child: Text(
+  //                     txt.amount.toString(),
+  //                   ),
+  //                 ),
+  //                 Column(
+  //                   crossAxisAlignment: CrossAxisAlignment.start,
+  //                   children: [
+  //                     Text(txt.title),
+  //                     Text(
+  //                       DateFormat.yMMMEd().format(txt.date),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ],
+  //             ),
+  //           );
+  //         }).toList(),
+  //       ),
+  //     );
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 300,
-      child: SingleChildScrollView(
-        child: Column(
-          children: transaction.map((txt) {
-            return Card(
-              child: Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(
-                      10,
-                    ),
-                    margin: EdgeInsets.symmetric(
-                      vertical: 10,
-                      horizontal: 15,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 2,
-                      ),
-                    ),
-                    child: Text(
-                      txt.amount.toString(),
+      child: ListView.builder(
+        itemBuilder: (ctx, index) {
+          return Card(
+            child: Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(
+                    10,
+                  ),
+                  margin: EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 15,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 2,
                     ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(txt.title),
-                      Text(
-                        DateFormat.yMMMEd().format(txt.date),
-                      ),
-                    ],
+                  child: Text(
+                    transaction[index].amount.toString(),
                   ),
-                ],
-              ),
-            );
-          }).toList(),
-        ),
-      )
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(transaction[index].title),
+                    Text(
+                      DateFormat.yMMMEd().format(transaction[index].date),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }
