@@ -7,6 +7,21 @@ class NewTransaction extends StatelessWidget {
 
   NewTransaction(this.addTx);
 
+  void submitedData() {
+    final entredTitle = titleController.text;
+    final entredAmount = double.parse(amountController.text);
+
+    //dummy validation
+    if(entredTitle.isEmpty || entredAmount <= 0) {
+      return;
+    }
+
+    addTx(
+      titleController.text,
+      double.parse(amountController.text),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -19,6 +34,7 @@ class NewTransaction extends StatelessWidget {
             TextField(
               decoration: InputDecoration(labelText: 'Title'),
               controller: titleController,
+              onSubmitted: (_) => submitedData,
               // onChanged: (val) {
               //   titleInput = val;
               // },
@@ -26,18 +42,22 @@ class NewTransaction extends StatelessWidget {
             TextField(
               decoration: InputDecoration(labelText: 'Amount'),
               controller: amountController,
+              keyboardType: TextInputType.number,
+              onSubmitted: (_) => submitedData,
               // onChanged: (val) => amountInput = val
             ),
             FlatButton(
-              onPressed: () {
+              //onPressed: () {
                 // print(titleInput);
                 // print(amountInput);
                 // print(titleController.text);
-                addTx(
-                  titleController.text,
-                  double.parse(amountController.text),
-                );
-              },
+                // addTx(
+                //   titleController.text,
+                //   double.parse(amountController.text),
+                // );
+
+              //},
+              onPressed: submitedData,
               child: Text('Add transaction'),
               textColor: Colors.purple,
             ),

@@ -79,7 +79,8 @@ class TransactionList extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    transaction[index].amount.toString(),
+                    ///toStringAsFixed(2) membulatkan bilangan
+                    '\$${transaction[index].amount.toStringAsFixed(2)}',
                   ),
                 ),
                 Column(
@@ -95,6 +96,7 @@ class TransactionList extends StatelessWidget {
             ),
           );
         },
+        itemCount: transaction.length,
       ),
     );
   }
