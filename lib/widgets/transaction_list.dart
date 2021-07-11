@@ -74,13 +74,18 @@ class TransactionList extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Colors.black,
+                      color: Theme.of(context).primaryColor,
                       width: 2,
                     ),
                   ),
                   child: Text(
                     ///toStringAsFixed(2) membulatkan bilangan
                     '\$${transaction[index].amount.toStringAsFixed(2)}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
                 ),
                 Column(
