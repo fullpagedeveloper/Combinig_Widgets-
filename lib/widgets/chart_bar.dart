@@ -12,8 +12,11 @@ class ChartBar extends StatelessWidget {
     return Column(
       ///FittedBox membuat ukurannya semakinkecil
       children: [
-        FittedBox(
-          child: Text('\$${spendingAmout.toStringAsFixed(2)}'),
+        Container(
+          height: 20,
+          child: FittedBox(
+            child: Text('\$${spendingAmout.toStringAsFixed(2)}'),
+          ),
         ),
         SizedBox(
           height: 4,
