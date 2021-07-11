@@ -35,7 +35,8 @@ class Chart extends StatelessWidget {
           'amount': totalSum
         };
       },
-    );
+    ).reversed.toList();
+    /// reversed.toList() membalikan dari a - b menjadi b - a
   }
 
   double get totalSpanding {
