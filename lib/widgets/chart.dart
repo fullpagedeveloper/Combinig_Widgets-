@@ -38,7 +38,7 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("ahah ====> $groupedTransactionValues");
+    print("ahaha ====> $groupedTransactionValues");
     return Card(
       elevation: 6,
       margin: EdgeInsets.all(20),
