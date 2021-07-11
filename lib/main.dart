@@ -34,18 +34,18 @@ class _MyHomePageState extends State<MyHomePage> {
   // String amountInput;
 
   final List<Transaction> _uerTransactions = [
-    Transaction(
-      id: 't1',
-      title: 'New Shoes',
-      amount: 69.99,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Waaaao Oooo',
-      amount: 69.99,
-      date: DateTime.now(),
-    )
+    // Transaction(
+    //   id: 't1',
+    //   title: 'New Shoes',
+    //   amount: 69.99,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 't2',
+    //   title: 'Waaaao Oooo',
+    //   amount: 69.99,
+    //   date: DateTime.now(),
+    // )
   ];
 
   ///[addNewTransaction]
