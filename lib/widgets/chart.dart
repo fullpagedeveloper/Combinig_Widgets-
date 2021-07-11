@@ -1,3 +1,4 @@
+import 'package:Combinig_Widgets/widgets/chart_bar.dart';
 import 'package:intl/intl.dart';
 
 import '../models/transaction.dart';
@@ -11,7 +12,7 @@ class Chart extends StatelessWidget {
   List<Map<String, Object>> get groupedTransactionValues {
     return List.generate(
       7,
-          (index) {
+      (index) {
         final weekDay = DateTime.now().subtract(
           Duration(days: index),
         );
@@ -36,6 +37,12 @@ class Chart extends StatelessWidget {
     );
   }
 
+  double get totalSpanding {
+    return groupedTransactionValues.fold(0.0, (sum, item) {
+      return sum + item['amount'];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     print("ahaha ====> $groupedTransactionValues");
@@ -44,7 +51,13 @@ class Chart extends StatelessWidget {
       margin: EdgeInsets.all(20),
       child: Row(
         children: groupedTransactionValues.map((data) {
-          return Text('${data['day']} : ${data['amount']}');
+          // return Text('${data['day']} : ${data['amount']}');
+          return ChartBar(
+              data['day'],
+              data['amount'],
+              totalSpanding == 0.0
+                  ? 0.0
+                  : (data['amount'] as double) / totalSpanding);
         }).toList(),
       ),
     );
