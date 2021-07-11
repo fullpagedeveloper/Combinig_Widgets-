@@ -1,3 +1,5 @@
+import 'package:Combinig_Widgets/widgets/chart.dart';
+
 import './widgets/new_transaction.dart';
 
 import './widgets/transaction_list.dart';
@@ -33,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // String titleInput;
   // String amountInput;
 
-  final List<Transaction> _uerTransactions = [
+  final List<Transaction> _userTransactions = [
     // Transaction(
     //   id: 't1',
     //   title: 'New Shoes',
@@ -48,6 +50,18 @@ class _MyHomePageState extends State<MyHomePage> {
     // )
   ];
 
+  List<Transaction> get _recentTransactions {
+    return _userTransactions.where(
+      (txt) {
+        return txt.date.isAfter(
+          DateTime.now().subtract(
+            Duration(days: 7),
+          ),
+        );
+      },
+    ).toList();
+  }
+
   ///[addNewTransaction]
   void _addNewTransaction(String txTitle, double txAmount) {
     final newTx = Transaction(
@@ -57,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
         date: DateTime.now());
 
     setState(() {
-      _uerTransactions.add(newTx);
+      _userTransactions.add(newTx);
     });
   }
 
@@ -66,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
       context: context,
       builder: (_) {
         return GestureDetector(
-          onTap: (){},
+          onTap: () {},
           child: NewTransaction(_addNewTransaction),
           behavior: HitTestBehavior.opaque,
         );
@@ -90,16 +104,17 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              width: double.infinity,
-              child: Card(
-                color: Colors.blue,
-                child: Text('CHART!'),
-                elevation: 5,
-              ),
-            ),
+            // Container(
+            //   width: double.infinity,
+            //   child: Card(
+            //     color: Colors.blue,
+            //     child: Text('CHART!'),
+            //     elevation: 5,
+            //   ),
+            // ),
+            Chart(_recentTransactions),
             // UserTransactions(),
-            TransactionList(_uerTransactions)
+            TransactionList(_userTransactions)
           ],
         ),
       ),
