@@ -18,13 +18,13 @@ class _NewTransactionState extends State<NewTransaction> {
     final entredAmount = double.parse(amountController.text);
 
     //dummy validation
-    if(entredTitle.isEmpty || entredAmount <= 0) {
+    if (entredTitle.isEmpty || entredAmount <= 0) {
       return;
     }
 
     widget.addTx(
-        entredTitle,
-        entredAmount,
+      entredTitle,
+      entredAmount,
     );
 
     Navigator.of(context).pop();
@@ -54,20 +54,37 @@ class _NewTransactionState extends State<NewTransaction> {
               onSubmitted: (_) => submitedData,
               // onChanged: (val) => amountInput = val
             ),
-            FlatButton(
+            Container(
+              height: 70,
+              child: Row(
+                children: [
+                  Text('No Data Chosen!'),
+                  FlatButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Chose Date',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    textColor: Theme.of(context).primaryColor,
+                  ),
+                ],
+              ),
+            ),
+            RaisedButton(
               //onPressed: () {
-                // print(titleInput);
-                // print(amountInput);
-                // print(titleController.text);
-                // addTx(
-                //   titleController.text,
-                //   double.parse(amountController.text),
-                // );
+              // print(titleInput);
+              // print(amountInput);
+              // print(titleController.text);
+              // addTx(
+              //   titleController.text,
+              //   double.parse(amountController.text),
+              // );
 
               //},
               onPressed: submitedData,
               child: Text('Add transaction'),
-              textColor: Colors.purple,
+              color: Theme.of(context).primaryColor,
+              textColor: Theme.of(context).textTheme.button.color,
             ),
           ],
         ),
