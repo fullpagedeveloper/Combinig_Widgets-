@@ -4,8 +4,9 @@ import '../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transaction;
+  final Function deleteTxt;
 
-  TransactionList(this.transaction);
+  TransactionList(this.transaction, this.deleteTxt);
 
   ///[ListView.builder(itemBuilder: null)] hanya memuat apa yang terlihat
   ///ListView menampilkan semuany
@@ -140,6 +141,11 @@ class TransactionList extends StatelessWidget {
                     ),
                     subtitle: Text(
                         DateFormat.yMMMEd().format(transaction[index].date)),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      color: Theme.of(context).errorColor,
+                      onPressed: () => deleteTxt(transaction[index].id),
+                    ),
                   ),
                 );
               },
