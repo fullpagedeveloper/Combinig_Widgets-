@@ -16,17 +16,21 @@ class _NewTransactionState extends State<NewTransaction> {
   DateTime _selectedDate;
 
   void _submitedData() {
+    if(_amountController.text.isEmpty) {
+      return;
+    }
     final entredTitle = _titleController.text;
     final entredAmount = double.parse(_amountController.text);
 
     //dummy validation
-    if (entredTitle.isEmpty || entredAmount <= 0) {
+    if (entredTitle.isEmpty || entredAmount <= 0 || _selectedDate == null) {
       return;
     }
 
     widget.addTx(
       entredTitle,
       entredAmount,
+      _selectedDate,
     );
 
     Navigator.of(context).pop();
@@ -36,7 +40,7 @@ class _NewTransactionState extends State<NewTransaction> {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2019),
+      firstDate: DateTime(2019), //startnya dari tahun ke berapa
       lastDate: DateTime.now(),
     ).then((pickerDate) {
       if (pickerDate == null) {
