@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Transaction> get _recentTransactions {
     return _userTransactions.where(
-      (txt) {
+          (txt) {
         return txt.date.isAfter(
           DateTime.now().subtract(
             Duration(days: 7),
@@ -64,8 +64,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   ///[addNewTransaction]
-  void _addNewTransaction(
-      String txTitle, double txAmount, DateTime chosenDate) {
+  void _addNewTransaction(String txTitle, double txAmount,
+      DateTime chosenDate) {
     final newTx = Transaction(
         id: DateTime.now().toString(),
         title: txTitle,
@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _deleteTransaction(String id) {
     setState(
-      () {
+          () {
         _userTransactions.removeWhere((txt) => txt.id == id);
       },
     );
