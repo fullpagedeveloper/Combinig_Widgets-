@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:Combinig_Widgets/widgets/chart.dart';
 
 import './widgets/new_transaction.dart';
@@ -108,9 +110,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = mediaQuery;
-    final isLandscape =
-        mediaQuery.orientation == Orientation.landscape;
+    final mediaQuery = MediaQuery.of(context);
+    final isLandscape = mediaQuery.orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text("Personal Expenses"),
       actions: [
@@ -148,7 +149,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Chow Chart'),
-                  Switch(
+
+                  ///adaptive untuk IOS
+                  Switch.adaptive(
+                      activeColor: Theme.of(context).primaryColor,
                       value: _showChart,
                       onChanged: (val) {
                         setState(() {
@@ -181,10 +185,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => _startAddNewTransaction(context),
-      ),
+      floatingActionButton: Platform.isIOS
+          ? Container()
+          : FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () => _startAddNewTransaction(context),
+            ),
     );
   }
 }
