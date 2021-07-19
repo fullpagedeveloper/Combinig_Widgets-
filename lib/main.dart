@@ -161,7 +161,10 @@ class _MyHomePageState extends State<MyHomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Chow Chart'),
+                  Text(
+                    'Chow Chart',
+                    style: Theme.of(context).textTheme.title,
+                  ),
 
                   ///adaptive untuk IOS
                   Switch.adaptive(
