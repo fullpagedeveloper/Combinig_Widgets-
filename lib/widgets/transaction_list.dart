@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/transaction.dart';
+import 'transaction_item.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transaction;
@@ -122,41 +123,7 @@ class TransactionList extends StatelessWidget {
               //     ],
               //   ),
               // );
-              return Card(
-                elevation: 5,
-                margin: EdgeInsets.symmetric(
-                  vertical: 8,
-                  horizontal: 5,
-                ),
-                child: ListTile(
-                  leading: CircleAvatar(
-                    radius: 30,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: FittedBox(
-                          child: Text('\$${transaction[index].amount}')),
-                    ),
-                  ),
-                  title: Text(
-                    transaction[index].title,
-                    style: Theme.of(context).textTheme.title,
-                  ),
-                  subtitle:
-                      Text(DateFormat.yMMMEd().format(transaction[index].date)),
-                  trailing: MediaQuery.of(context).size.width > 360
-                      ? FlatButton.icon(
-                          icon: Icon(Icons.delete),
-                          label: Text('Delete'),
-                          textColor: Theme.of(context).errorColor,
-                          onPressed: () => deleteTxt(transaction[index].id),
-                        )
-                      : IconButton(
-                          icon: Icon(Icons.delete),
-                          color: Theme.of(context).errorColor,
-                          onPressed: () => deleteTxt(transaction[index].id),
-                        ),
-                ),
-              );
+              return TransactionItem(transaction: transaction[index], deleteTxt: deleteTxt);
             },
             itemCount: transaction.length,
           );
