@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Transaction> get _recentTransactions {
     return _userTransactions.where(
-      (txt) {
+          (txt) {
         return txt.date.isAfter(
           DateTime.now().subtract(
             Duration(days: 7),
@@ -75,8 +75,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   ///[addNewTransaction]
-  void _addNewTransaction(
-      String txTitle, double txAmount, DateTime chosenDate) {
+  void _addNewTransaction(String txTitle, double txAmount,
+      DateTime chosenDate) {
     final newTx = Transaction(
         id: DateTime.now().toString(),
         title: txTitle,
@@ -103,10 +103,63 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _deleteTransaction(String id) {
     setState(
-      () {
+          () {
         _userTransactions.removeWhere((txt) => txt.id == id);
       },
     );
+  }
+
+  List<Widget> _buildLandscapeContent(MediaQueryData mediaQuery, AppBar appBar,
+      Widget txtListWidged,) {
+    return [Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'Chow Chart',
+          style: Theme
+              .of(context)
+              .textTheme
+              .title,
+        ),
+
+        ///adaptive untuk IOS
+        Switch.adaptive(
+            activeColor: Theme
+                .of(context)
+                .primaryColor,
+            value: _showChart,
+            onChanged: (val) {
+              setState(() {
+                _showChart = val;
+              });
+            }),
+      ],
+    ), _showChart
+        ? Container(
+      height: (mediaQuery.size.height -
+          appBar.preferredSize.height -
+          mediaQuery.padding.top) *
+          0.3,
+      child: Chart(_recentTransactions),
+    )
+        : txtListWidged,
+    ];
+  }
+
+  ///menggabungkan view dalam satu method dengan menambahkan List<Widget>
+  List<Widget> _buildPortraitContent(MediaQueryData mediaQuery,
+      AppBar appBar,
+      Widget txtListWidged,) {
+    return [
+      Container(
+        height: (mediaQuery.size.height -
+            appBar.preferredSize.height -
+            mediaQuery.padding.top) *
+            0.3,
+        child: Chart(_recentTransactions),
+      ),
+      txtListWidged
+    ];
   }
 
   @override
@@ -115,31 +168,31 @@ class _MyHomePageState extends State<MyHomePage> {
     final isLandscape = mediaQuery.orientation == Orientation.landscape;
     final PreferredSizeWidget appBar = Platform.isIOS
         ? CupertinoNavigationBar(
-            middle: Text("Personal Expenses"),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                GestureDetector(
-                  child: Icon(CupertinoIcons.add),
-                  onTap: () => _startAddNewTransaction(context),
-                ),
-              ],
-            ),
-          )
+      middle: Text("Personal Expenses"),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          GestureDetector(
+            child: Icon(CupertinoIcons.add),
+            onTap: () => _startAddNewTransaction(context),
+          ),
+        ],
+      ),
+    )
         : AppBar(
-            title: Text("Personal Expenses"),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () => _startAddNewTransaction(context),
-              ),
-            ],
-          );
+      title: Text("Personal Expenses"),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () => _startAddNewTransaction(context),
+        ),
+      ],
+    );
 
     final txtListWidged = Container(
       height: (mediaQuery.size.height -
-              appBar.preferredSize.height -
-              mediaQuery.padding.top) *
+          appBar.preferredSize.height -
+          mediaQuery.padding.top) *
           0.7,
       child: TransactionList(_userTransactions, _deleteTransaction),
     );
@@ -157,45 +210,19 @@ class _MyHomePageState extends State<MyHomePage> {
             //     elevation: 5,
             //   ),
             // ),
-            if (isLandscape)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Chow Chart',
-                    style: Theme.of(context).textTheme.title,
-                  ),
+            if (isLandscape) ..._buildLandscapeContent(mediaQuery,
+              appBar,
+              txtListWidged,),
 
-                  ///adaptive untuk IOS
-                  Switch.adaptive(
-                      activeColor: Theme.of(context).primaryColor,
-                      value: _showChart,
-                      onChanged: (val) {
-                        setState(() {
-                          _showChart = val;
-                        });
-                      }),
-                ],
-              ),
+            ///syntack spread ... tiga titik ini mengembalikan List
+            ///memberitahu dart ingin menarik semua element dari list itu dan
+            ///menggabungkannya sebagai elemnt tunggal
             if (!isLandscape)
-              Container(
-                height: (mediaQuery.size.height -
-                        appBar.preferredSize.height -
-                        mediaQuery.padding.top) *
-                    0.3,
-                child: Chart(_recentTransactions),
+              ..._buildPortraitContent(
+                mediaQuery,
+                appBar,
+                txtListWidged,
               ),
-            if (!isLandscape) txtListWidged,
-            if (isLandscape)
-              _showChart
-                  ? Container(
-                      height: (mediaQuery.size.height -
-                              appBar.preferredSize.height -
-                              mediaQuery.padding.top) *
-                          0.3,
-                      child: Chart(_recentTransactions),
-                    )
-                  : txtListWidged,
             // UserTransactions(),
           ],
         ),
@@ -205,16 +232,16 @@ class _MyHomePageState extends State<MyHomePage> {
     return Platform.isIOS
         ? CupertinoPageScaffold(child: pageBody, navigationBar: appBar)
         : Scaffold(
-            appBar: appBar,
-            body: pageBody,
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: Platform.isIOS
-                ? Container()
-                : FloatingActionButton(
-                    child: Icon(Icons.add),
-                    onPressed: () => _startAddNewTransaction(context),
-                  ),
-          );
+      appBar: appBar,
+      body: pageBody,
+      floatingActionButtonLocation:
+      FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Platform.isIOS
+          ? Container()
+          : FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => _startAddNewTransaction(context),
+      ),
+    );
   }
 }
