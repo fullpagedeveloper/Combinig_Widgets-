@@ -40,7 +40,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   // String titleInput;
   // String amountInput;
 
@@ -61,6 +61,25 @@ class _MyHomePageState extends State<MyHomePage> {
 
   //switch
   bool _showChart = false;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    print("initState ==>");
+    super.initState();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print("diddd => $state");
+  }
+
+  @override
+  dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    print("dispose ==>");
+    super.dispose();
+  }
 
   List<Transaction> get _recentTransactions {
     return _userTransactions.where(
