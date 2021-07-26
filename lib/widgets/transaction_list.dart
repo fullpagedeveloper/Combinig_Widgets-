@@ -82,50 +82,54 @@ class TransactionList extends StatelessWidget {
               );
             },
           )
-        : ListView.builder(
-            itemBuilder: (ctx, index) {
-              // return Card(
-              //   child: Row(
-              //     children: [
-              //       Container(
-              //         padding: EdgeInsets.all(
-              //           10,
-              //         ),
-              //         margin: EdgeInsets.symmetric(
-              //           vertical: 10,
-              //           horizontal: 15,
-              //         ),
-              //         decoration: BoxDecoration(
-              //           border: Border.all(
-              //             color: Theme.of(context).primaryColor,
-              //             width: 2,
-              //           ),
-              //         ),
-              //         child: Text(
-              //           ///toStringAsFixed(2) membulatkan bilangan
-              //           '\$${transaction[index].amount.toStringAsFixed(2)}',
-              //           style: TextStyle(
-              //             fontWeight: FontWeight.bold,
-              //             fontSize: 20,
-              //             color: Theme.of(context).primaryColor,
-              //           ),
-              //         ),
-              //       ),
-              //       Column(
-              //         crossAxisAlignment: CrossAxisAlignment.start,
-              //         children: [
-              //           Text(transaction[index].title),
-              //           Text(
-              //             DateFormat.yMMMEd().format(transaction[index].date),
-              //           ),
-              //         ],
-              //       ),
-              //     ],
-              //   ),
-              // );
-              return TransactionItem(transaction: transaction[index], deleteTxt: deleteTxt);
-            },
-            itemCount: transaction.length,
-          );
+        : ListView(
+            children: transaction
+                .map((txt) => TransactionItem(
+                    key: ValueKey(txt.id), transaction: txt, deleteTxt: deleteTxt))
+                .toList()
+            //  itemBuilder: (ctx, index) {
+            // return Card(
+            //   child: Row(
+            //     children: [
+            //       Container(
+            //         padding: EdgeInsets.all(
+            //           10,
+            //         ),
+            //         margin: EdgeInsets.symmetric(
+            //           vertical: 10,
+            //           horizontal: 15,
+            //         ),
+            //         decoration: BoxDecoration(
+            //           border: Border.all(
+            //             color: Theme.of(context).primaryColor,
+            //             width: 2,
+            //           ),
+            //         ),
+            //         child: Text(
+            //           ///toStringAsFixed(2) membulatkan bilangan
+            //           '\$${transaction[index].amount.toStringAsFixed(2)}',
+            //           style: TextStyle(
+            //             fontWeight: FontWeight.bold,
+            //             fontSize: 20,
+            //             color: Theme.of(context).primaryColor,
+            //           ),
+            //         ),
+            //       ),
+            //       Column(
+            //         crossAxisAlignment: CrossAxisAlignment.start,
+            //         children: [
+            //           Text(transaction[index].title),
+            //           Text(
+            //             DateFormat.yMMMEd().format(transaction[index].date),
+            //           ),
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // );
+            //     return TransactionItem(transaction: transaction[index], deleteTxt: deleteTxt);
+            //   },
+            //   itemCount: transaction.length,
+            );
   }
 }
